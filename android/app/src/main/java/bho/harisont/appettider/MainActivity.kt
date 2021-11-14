@@ -1,14 +1,10 @@
 package bho.harisont.appettider
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -20,14 +16,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bho.harisont.appettider.ui.theme.AppettiderTheme
 
+val places = listOf(
+    "Kvibergs Marknad",
+    "Stadsbiblioteket",
+    "Lidl Nordstan",
+    "Litteraturhuset",
+    "Postnord",
+    "Stora Teater",
+    "Hagabion",
+    "Bio Roy",
+    "Kuggen",
+    "Gamlestadens Barnmorskemottagning",
+    "Radar",
+    "Willy's",
+    "Biltema"
+)
+
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppettiderTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    val places = listOf("Kvibergs Marknad", "Stadsbiblioteket", "Lidl Nordstan")
                     PlacesColumn(places)
                 }
             }
@@ -37,15 +49,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PlacesColumn(places: List<String>) {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
-            .fillMaxSize()
-    ) {
-        for (i in places.indices) {
+    LazyColumn(){
+        items(places.size){
             Text(
-                text = places[i],
+                text = places[it],
                 fontSize = 36.sp,
                 modifier = Modifier.padding(8.dp)
             )
@@ -58,7 +65,6 @@ fun PlacesColumn(places: List<String>) {
 @Composable
 fun DefaultPreview() {
     AppettiderTheme {
-        val places = listOf("Kvibergs Marknad", "Stadsbiblioteket", "Lidl Nordstan")
         PlacesColumn(places)
     }
 }
