@@ -1,10 +1,14 @@
 package bho.harisont.appettider
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -40,7 +44,11 @@ class MainActivity : ComponentActivity() {
             AppettiderTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    PlacesColumn(places)
+                    PlacesColumn (places) {
+                        val intent = Intent(this,PlaceActivity::class.java)
+                        intent.putExtra("place",places[it])
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -48,23 +56,30 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PlacesColumn(places: List<String>) {
+fun PlacesColumn(places: List<String>, clickedPlace: (Int) -> Unit) {
     LazyColumn(){
         items(places.size){
-            Text(
-                text = places[it],
-                fontSize = 36.sp,
-                modifier = Modifier.padding(8.dp)
-            )
-            Divider(color = androidx.compose.ui.graphics.Color.Gray, thickness = 1.dp)
+            Surface(
+                modifier = Modifier
+                    .clickable {clickedPlace(it)})
+            {
+                Text(
+                    text = places[it],
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(15.dp)
+                )
+                Divider(color = androidx.compose.ui.graphics.Color.Gray, thickness = 1.dp)
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun PlacesColumnPreview() {
     AppettiderTheme {
-        PlacesColumn(places)
+        PlacesColumn(places) {
+            // no lambda here, doesn't matter
+        }
     }
 }

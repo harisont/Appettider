@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appettider">
         <activity
+            android:name=".PlaceActivity"
+            android:exported="false"
+            android:label="@string/title_activity_place"
+            android:theme="@style/Theme.Appettider.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
