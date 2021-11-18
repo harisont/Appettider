@@ -27,3 +27,11 @@ Built to practice Android development and try out Jetpack Compose.
 
 ## Prototype
 ![Prototype](prototype.jpg)
+
+## Persistence
+Data is stored in a local SQLite database using [Room](https://developer.android.com/training/data-storage/room/).
+The database consists of a single table of `Place`s, with the following attributes:
+- `name: String` (primary key)
+- `address: String`
+- `opening_times: Map<Weekday, String>` where `Weekday` is an enumeration type and the opening time is, for simplicity, represented as a string, for instance `"10:00-19:00"`
+- `notes: String`
